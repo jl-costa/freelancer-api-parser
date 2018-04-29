@@ -11,7 +11,7 @@ from sqlalchemy import create_engine
 generated_ids = random.sample(range(1, 27382501), 50000)
 
 # Convert list into Pandas Series
-generated_ids = pd.Series(generated_ids)
+generated_ids = pd.DataFrame(generated_ids, columns = ["id"])
 
 # Initialize local SQL connection to store data
 cnx = create_engine('mysql+pymysql://parser:DoIq55NnQ8uz1@localhost:3306/freelancer', echo=False)
