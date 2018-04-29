@@ -1,0 +1,16 @@
+### This script will generate a random sample of user IDs and store it in a local DB ###
+
+# Initial imports
+import random
+import pandas as pd
+from datetime import datetime
+
+# Generate list of 50,000 random user IDs within range (27382501 registered users as of Feb 27, 2018)
+generated_ids = random.sample(range(1, 27382501), 50000)
+
+# Convert list into Pandas Series
+generated_ids = pd.Series(generated_ids)
+
+# Initialize local SQL connection to store data
+
+
