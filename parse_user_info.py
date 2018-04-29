@@ -55,14 +55,14 @@ cnx = create_engine('mysql+pymysql://parser:DoIq55NnQ8uz1@localhost:3306/freelan
 ids_result = cnx.execute("SELECT * FROM generated_ids LIMIT 1000")
 
 # Initialize empty list
-generated_ids = []
+list_of_ids = []
 
 # Iterate through output of SQL query, and add IDs to list
 for row in ids_result:
-	generated_ids = generated_ids.append(ids_result[[generated_ids.id]])
+	list_of_ids = list_of_ids.append(ids_result[generated_ids.id])
 
 # Create queue of users from list of IDs
-user_queue = deque(generated_ids)
+user_queue = deque(list_of_ids)
 
 # Initialize empty dataframe
 userdf = pd.DataFrame()
