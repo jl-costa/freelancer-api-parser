@@ -52,9 +52,8 @@ def get_user_data(user_id):
 # Initialize local SQL connection
 cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], db_config['pass'], db_config['host'], db_config['port'], db_config['db']), echo=False)
 
-# Import 1000 user IDs that still have to be parsed
-# WHERE id NOT IN (SELECT userid FROM users)
-ids_result = cnx.execute("SELECT * FROM generated_ids LIMIT 10")
+# Import 100 user IDs that still have to be parsed
+ids_result = cnx.execute("SELECT * FROM generated_ids WHERE id NOT IN (SELECT userid FROM users) LIMIT 100")
 
 # Initialize empty list
 list_of_ids = []
