@@ -1,8 +1,0 @@
-https://vzcontrol.vpscheap.net:5656/admincp/manage.php?id=20141
-
-juan-server1.com
-
-Main IP Address	192.250.236.36
-Root Password	P1lu2SAYIk
-Console Username	console-SYctH3
-Console Password	P1lu2SAYIk
