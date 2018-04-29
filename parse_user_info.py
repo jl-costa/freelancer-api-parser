@@ -9,6 +9,8 @@ import time
 from datetime import datetime
 import pymysql
 from sqlalchemy import create_engine
+from db_config import db_config
+from collections import deque
 
 from freelancersdk.session import Session
 
@@ -48,18 +50,18 @@ def get_user_data(user_id):
         return None
 
 # Initialize local SQL connection
-cnx = create_engine('mysql+pymysql://parser:DoIq55NnQ8uz1@localhost:3306/freelancer', echo=False)
+cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], db_config['pass'], db_config['host'], db_config['port'], db_config['db']), echo=False)
 
 # Import 1000 user IDs that still have to be parsed
 # WHERE id NOT IN (SELECT userid FROM users)
-ids_result = cnx.execute("SELECT * FROM generated_ids LIMIT 1000")
+ids_result = cnx.execute("SELECT * FROM generated_ids LIMIT 10")
 
 # Initialize empty list
 list_of_ids = []
 
 # Iterate through output of SQL query, and add IDs to list
 for row in ids_result:
-	list_of_ids = list_of_ids.append(ids_result['id'])
+     list_of_ids.append(row['id'])
 
 # Create queue of users from list of IDs
 user_queue = deque(list_of_ids)
