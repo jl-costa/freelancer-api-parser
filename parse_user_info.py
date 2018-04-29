@@ -59,7 +59,7 @@ list_of_ids = []
 
 # Iterate through output of SQL query, and add IDs to list
 for row in ids_result:
-	list_of_ids = list_of_ids.append(ids_result[generated_ids.id])
+	list_of_ids = list_of_ids.append(ids_result['id'])
 
 # Create queue of users from list of IDs
 user_queue = deque(list_of_ids)
