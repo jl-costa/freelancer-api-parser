@@ -80,6 +80,7 @@ while user_queue:
         tempdf = pd.io.json.json_normalize(user_data)
         tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
         tempdf.insert(0, 'userid', userid)
+        tempdf = tempdf.loc[:,~tempdf.columns.duplicated()]
         userdf = userdf.append(tempdf)
     
     # If user wasn't found, do nothing
