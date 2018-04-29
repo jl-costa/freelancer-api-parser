@@ -14,8 +14,10 @@ generated_ids = random.sample(range(1, 27382501), 50000)
 generated_ids = pd.Series(generated_ids)
 
 # Initialize local SQL connection to store data
-cnx = create_engine('mysql+pymysql://opsgenie_usr:i349jdqaa38fd@localhost:3306/opsgenie', echo=False)
+cnx = create_engine('mysql+pymysql://parser:DoIq55NnQ8uz1@localhost:3306/freelancer', echo=False)
 
 # Write data
 generated_ids.to_sql(name='generated_ids', con=cnx, if_exists = 'replace', index=False)
+
+print("{} values written on {}".format(len(generated_ids), datetime.now()))
 
