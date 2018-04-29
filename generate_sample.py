@@ -19,5 +19,6 @@ cnx = create_engine('mysql+pymysql://parser:DoIq55NnQ8uz1@localhost:3306/freelan
 # Write data
 generated_ids.to_sql(name='generated_ids', con=cnx, if_exists = 'replace', index=False)
 
+# Print output
 print("{} values written on {}".format(len(generated_ids), datetime.now()))
 
