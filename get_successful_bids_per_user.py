@@ -49,7 +49,7 @@ def get_successful_bids_per_user(user_id, offset):
 
 # Recursive function to parse all successful bids for a given user
 def parse_all_successful_bids_per_user(userid, offset):
-    all_bids = pd.DataFrame()
+	all_bids = pd.DataFrame()
     bids_data = get_successful_bids_per_user(userid, offset)
     
 	while bids_data.empty == False:
@@ -60,8 +60,8 @@ def parse_all_successful_bids_per_user(userid, offset):
 		print(all_bids.min()['time_submitted'])
 		print(offset)
 		print("len of all_bids is {}".format(len(all_bids)))
-    
-    return all_bids
+
+	return all_bids
        
         
     #     try:
