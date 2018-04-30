@@ -25,6 +25,7 @@ def get_successful_bids_per_user(user_id, offset):
     url = os.environ.get('FLN_URL')
     oauth_token = os.environ.get('FLN_OAUTH_TOKEN')
     session = Session(oauth_token=token, url=url)
+    bids_data = pd.DataFrame()
 
     get_bids_data = {
         'user_ids': [
@@ -38,31 +39,41 @@ def get_successful_bids_per_user(user_id, offset):
     }
 
     try:
-        bids_per_user = get_bids(session, **get_bids_data)
-        return bids_per_user
+        bids_response = get_bids(session, **get_bids_data)
+        
+        bids_data = pd.io.json.json_normalize(bids_response['bids'])
+        bids_data.columns = bids_data.columns.map(lambda x: x.split(".")[-1])
+        return bids_data
     except BidsNotFoundException:
-        return None        
+        return bids_data        
 
 # Recursive function to parse all successful bids for a given user
-def parse_all_successful_bids_per_user(userid, offset, all_user_bids_df):
-    successful_bids_per_user_data = get_successful_bids_per_user(userid, offset)
+def parse_all_successful_bids_per_user(userid, offset):
+    all_bids = pd.DataFrame()
+    bids_data = get_successful_bids_per_user(userid, offset)
     
-    if len(successful_bids_per_user_data['bids']) > 0:
-        tempdf = pd.io.json.json_normalize(successful_bids_per_user_data['bids'])
-        tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
-        all_user_bids_df = all_user_bids_df.append(tempdf)
-        offset += 100
-        try:
-            print(userid)
-            print(all_user_bids_df.min()['time_submitted'])
-            print(offset)
-            print("len of all_user_bids_df is {}".format(len(all_user_bids_df)))
-            all_user_bids_df = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
-            return all_user_bids_df
-        except IndexError:
-            return all_user_bids_df
-    else:
-        return all_user_bids_df
+	while bids_data.empty == False:
+    	all_bids = all_bids.append(bids_data)
+    	offset += 100 
+    	bids_data = get_successful_bids_per_user(userid, offset)
+    	print(userid)
+        print(all_bids.min()['time_submitted'])
+        print(offset)
+        print("len of all_bids is {}".format(len(all_bids)))
+    
+    return all_bids
+       
+        
+    #     try:
+            
+    #         all_user_bids_df = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
+    #         return all_user_bids_df
+    #     except IndexError:
+    #         return all_user_bids_df
+    # else:
+    #     return all_user_bids_df
+
+
 
 # Initialize local SQL connection
 cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
@@ -95,12 +106,11 @@ offset = 0
 # Parse user_ids until queue is empty
 while user_id_queue:
     userid = user_id_queue.pop()
-    all_user_bids_df = pd.DataFrame()
-    bids_data = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
+    bids_df = parse_all_successful_bids_per_user(userid, offset)
     
     # Process data returned by API, if bids were found
-    if bids_data.empty != True:
-        tempdf = pd.io.json.json_normalize(bids_data)
+    if bids_df.empty != True:
+        tempdf = pd.io.json.json_normalize(bids_df)
         tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
         tempdf.insert(0, 'userid', userid)
         tempdf = tempdf.loc[:,~tempdf.columns.duplicated()]
