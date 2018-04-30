@@ -1,5 +1,5 @@
 # Initial imports
-import freelancersdk as api
+import freelancer_sdk_v2 as api
 import os
 import json
 import pandas as pd
@@ -10,10 +10,10 @@ from sqlalchemy import create_engine
 from db_config import db_config
 from collections import deque
 
-from freelancersdk.session import Session
+from freelancer_sdk_v2.session import Session
 
-from freelancersdk.resources.projects.projects import get_bids
-from freelancersdk.resources.projects.exceptions import \
+from freelancer_sdk_v2.resources.projects.projects import get_bids
+from freelancer_sdk_v2.resources.projects.exceptions import \
     BidsNotFoundException
 
 # Create session

@@ -1,7 +1,7 @@
 ### This will take a list of generated user IDs, and parse profile info one at a time ###
 
 # Initial imports
-import freelancersdk as api
+import freelancer_sdk_v2 as api
 import os
 import json
 import pandas as pd
@@ -12,13 +12,13 @@ from sqlalchemy import create_engine
 from db_config import db_config
 from collections import deque
 
-from freelancersdk.session import Session
+from freelancer_sdk_v2.session import Session
 
-from freelancersdk.resources.users.users import get_users
-from freelancersdk.resources.users.helpers import (
+from freelancer_sdk_v2.resources.users.users import get_users
+from freelancer_sdk_v2.resources.users.helpers import (
     create_get_users_object, create_get_users_details_object,
 )
-from freelancersdk.resources.users.exceptions import \
+from freelancer_sdk_v2.resources.users.exceptions import \
     UsersNotFoundException
 
 # Create session
