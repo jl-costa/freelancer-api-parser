@@ -69,7 +69,8 @@ cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_c
 																			db_config['host'], 
 																			db_config['port'], 
 																			db_config['db']), 
-																			echo=False)
+																			echo=False,
+																			poolclass=NullPool)
 
 # Import 100 user IDs whose bids still have to be parsed. Select only freelancer or hybrid profiles.
 # ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') AND userid NOT IN (SELECT userid FROM bids) LIMIT 100")
