@@ -69,8 +69,7 @@ cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_c
 																			db_config['host'], 
 																			db_config['port'], 
 																			db_config['db']), 
-																			echo=False,
-																			poolclass=NullPool)
+																			echo=False)
 
 # Import 100 user IDs whose bids still have to be parsed. Select only freelancer or hybrid profiles.
 # ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') AND userid NOT IN (SELECT userid FROM bids) LIMIT 100")
@@ -112,8 +111,16 @@ while user_id_queue:
 
     time.sleep(0.1)
 
+# Initialize second SQL connection
+cnx2 = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
+																			db_config['pass'], 
+																			db_config['host'], 
+																			db_config['port'], 
+																			db_config['db']), 
+																			echo=False)
+
 # Store results in DB
-successful_bids_df.to_sql(name='successful_bids', con=cnx, if_exists = 'append', index=False)
+successful_bids_df.to_sql(name='successful_bids', con=cnx2, if_exists = 'append', index=False)
 
 # Print output
 print("{} records inserted at {}".format(len(successful_bids_df), datetime.now()))
