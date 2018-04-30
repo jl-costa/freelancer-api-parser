@@ -47,7 +47,7 @@ def get_successful_bids_per_user(user_id, offset):
 def parse_all_successful_bids_per_user(userid, offset, all_user_bids_df):
     successful_bids_per_user_data = get_successful_bids_per_user(userid, offset)
     
-    while successful_bids_per_user_data is not None:
+    while len(successful_bids_per_user_data['bids']) > 0:
         tempdf = pd.io.json.json_normalize(successful_bids_per_user_data['bids'])
         tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
         all_user_bids_df = all_user_bids_df.append(tempdf)
