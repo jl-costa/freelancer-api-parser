@@ -120,7 +120,9 @@ cnx2 = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_
 																			echo=False)
 
 # Store results in DB
-successful_bids_df.to_sql(name='successful_bids', con=cnx2, if_exists = 'append', index=False)
+#successful_bids_df.to_sql(name='successful_bids', con=cnx2, if_exists = 'append', index=False)
+
+successful_bids_df.to_csv("successful_bids_df.csv")
 
 # Print output
 print("{} records inserted at {}".format(len(successful_bids_df), datetime.now()))
