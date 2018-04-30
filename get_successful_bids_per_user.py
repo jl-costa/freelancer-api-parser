@@ -44,8 +44,7 @@ def get_successful_bids_per_user(user_id, offset):
         return None        
 
 # Recursive function to parse all successful bids for a given user
-def parse_all_successful_bids_per_user(userid, offset):
-    all_user_bids_df = pd.DataFrame()
+def parse_all_successful_bids_per_user(userid, offset, all_user_bids_df):
     successful_bids_per_user_data = get_successful_bids_per_user(userid, offset)
     
     while successful_bids_per_user_data is not None:
@@ -58,7 +57,7 @@ def parse_all_successful_bids_per_user(userid, offset):
             print(all_user_bids_df.min()['time_submitted'])
             print(offset)
             print("len of all_user_bids_df is {}".format(len(all_user_bids_df)))
-            all_user_bids_df = parse_all_successful_bids_per_user(userid, offset)
+            all_user_bids_df = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
         except IndexError:
             return all_user_bids_df
     else:
@@ -95,7 +94,8 @@ offset = 0
 # Parse user_ids until queue is empty
 while user_id_queue:
     userid = user_id_queue.pop()
-    bids_data = parse_all_successful_bids_per_user(userid, offset)
+    all_user_bids_df = pd.DataFrame()
+    bids_data = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
     
     # Process data returned by API, if bids were found
     if bids_data.empty != True:
