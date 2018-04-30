@@ -91,7 +91,7 @@ while user_queue:
 
 # Select columns to keep in DF
 
-userdf = userdf.loc[, 
+userdf = userdf.loc[:, 
 ['userid',
 'chosen_role',
 'closed',
