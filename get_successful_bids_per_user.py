@@ -73,7 +73,7 @@ cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_c
 
 # Import 100 user IDs whose bids still have to be parsed. Select only freelancer or hybrid profiles.
 # ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') AND userid NOT IN (SELECT userid FROM bids) LIMIT 100")
-ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') LIMIT 5")
+ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') LIMIT 100")
 
 # Initialize empty list
 list_of_ids = []
