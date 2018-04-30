@@ -44,24 +44,25 @@ def get_successful_bids_per_user(user_id, offset):
         return None        
 
 # Recursive function to parse all successful bids for a given user
-def parse_all_successful_bids_per_user(userid, offset, successful_bids_df):
+def parse_all_successful_bids_per_user(userid, offset):
+    all_user_bids_df = pd.DataFrame()
     successful_bids_per_user_data = get_successful_bids_per_user(userid, offset)
     
-    if successful_bids_per_user_data is not None:
+    while successful_bids_per_user_data is not None:
         tempdf = pd.io.json.json_normalize(successful_bids_per_user_data['bids'])
         tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
-        successful_bids_df = successful_bids_df.append(tempdf)
+        all_user_bids_df = all_user_bids_df.append(tempdf)
         offset += 100
         try:
-            # print(userid)
-            # print(successful_bids_df.min()['time_submitted'])
-            # print(offset)
-            # print("len of successful_bids_df is {}".format(len(successful_bids_df)))
-            return parse_all_successful_bids_per_user(userid, offset, successful_bids_df)
+            print(userid)
+            print(all_user_bids_df.min()['time_submitted'])
+            print(offset)
+            print("len of all_user_bids_df is {}".format(len(all_user_bids_df)))
+            all_user_bids_df = parse_all_successful_bids_per_user(userid, offset)
         except IndexError:
-            return successful_bids_df
+            return all_user_bids_df
     else:
-        return None
+        return all_user_bids_df
 
 # Initialize local SQL connection
 cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
@@ -94,10 +95,10 @@ offset = 0
 # Parse user_ids until queue is empty
 while user_id_queue:
     userid = user_id_queue.pop()
-    bids_data = parse_all_successful_bids_per_user(userid, offset, successful_bids_df)
+    bids_data = parse_all_successful_bids_per_user(userid, offset)
     
     # Process data returned by API, if bids were found
-    if bids_data is not None:
+    if bids_data.empty != True:
         tempdf = pd.io.json.json_normalize(bids_data)
         tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
         tempdf.insert(0, 'userid', userid)
