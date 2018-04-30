@@ -54,7 +54,7 @@ def parse_all_successful_bids_per_user(userid, offset):
     
 	while bids_data.empty == False:
 		all_bids = all_bids.append(bids_data)
-		offset += 100 
+		offset += 100
 		bids_data = get_successful_bids_per_user(userid, offset)
 		print(userid)
 		print(all_bids.min()['time_submitted'])
