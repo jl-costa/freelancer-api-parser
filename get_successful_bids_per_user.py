@@ -58,6 +58,7 @@ def parse_all_successful_bids_per_user(userid, offset, all_user_bids_df):
             print(offset)
             print("len of all_user_bids_df is {}".format(len(all_user_bids_df)))
             all_user_bids_df = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
+            return all_user_bids_df
         except IndexError:
             return all_user_bids_df
     else:
