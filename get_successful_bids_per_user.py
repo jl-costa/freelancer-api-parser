@@ -49,19 +49,19 @@ def get_successful_bids_per_user(user_id, offset):
 
 # Recursive function to parse all successful bids for a given user
 def parse_all_successful_bids_per_user(userid, offset):
-	all_bids = pd.DataFrame()
+    all_bids = pd.DataFrame()
     bids_data = get_successful_bids_per_user(userid, offset)
     
-	while bids_data.empty == False:
-		all_bids = all_bids.append(bids_data)
-		offset += 100
-		bids_data = get_successful_bids_per_user(userid, offset)
-		print(userid)
-		print(all_bids.min()['time_submitted'])
-		print(offset)
-		print("len of all_bids is {}".format(len(all_bids)))
+    while bids_data.empty == False:
+        all_bids = all_bids.append(bids_data)
+        offset += 100
+        bids_data = get_successful_bids_per_user(userid, offset)
+        print(userid)
+        print(all_bids.min()['time_submitted'])
+        print(offset)
+        print("len of all_bids is {}".format(len(all_bids)))
 
-	return all_bids
+    return all_bids
        
         
     #     try:
@@ -77,11 +77,11 @@ def parse_all_successful_bids_per_user(userid, offset):
 
 # Initialize local SQL connection
 cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
-																			db_config['pass'], 
-																			db_config['host'], 
-																			db_config['port'], 
-																			db_config['db']), 
-																			echo=False)
+                                                                            db_config['pass'], 
+                                                                            db_config['host'], 
+                                                                            db_config['port'], 
+                                                                            db_config['db']), 
+                                                                            echo=False)
 
 # Import 100 user IDs whose bids still have to be parsed. Select only freelancer or hybrid profiles.
 # ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') AND userid NOT IN (SELECT userid FROM bids) LIMIT 100")
@@ -124,16 +124,16 @@ while user_id_queue:
 
 # Initialize second SQL connection
 cnx2 = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
-																			db_config['pass'], 
-																			db_config['host'], 
-																			db_config['port'], 
-																			db_config['db']), 
-																			echo=False)
+                                                                            db_config['pass'], 
+                                                                            db_config['host'], 
+                                                                            db_config['port'], 
+                                                                            db_config['db']), 
+                                                                            echo=False)
 
 # Store results in DB if DF isn't empty
 
 if successful_bids_df.empty != True:
-	successful_bids_df.to_sql(name='successful_bids', con=cnx2, if_exists = 'append', index=False)
+    successful_bids_df.to_sql(name='successful_bids', con=cnx2, if_exists = 'append', index=False)
 
 
 # Print output
