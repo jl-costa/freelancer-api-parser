@@ -121,19 +121,14 @@ while user_id_queue:
 
     time.sleep(0.1)
 
-# Initialize second SQL connection
-cnx2 = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
-                                                                            db_config['pass'], 
-                                                                            db_config['host'], 
-                                                                            db_config['port'], 
-                                                                            db_config['db']), 
-                                                                            echo=False)
+# Store user_ids that were processed in dedicated table
 
-# Store results in DB if DF isn't empty
+pd.Series(list_of_ids).to_sql(name='processed_ids', con=cnx, if_exists = 'append', index=False)
+
+# Store bids in DB if bids DF isn't empty
 
 if successful_bids_df.empty != True:
-    successful_bids_df.to_sql(name='successful_bids', con=cnx2, if_exists = 'append', index=False)
-
+    successful_bids_df.to_sql(name='successful_bids', con=cnx, if_exists = 'append', index=False)
 
 # Print output
-print("{} records inserted at {}".format(len(successful_bids_df), datetime.now()))
+print("{} user_ids processed with {} successful bids found at {}".format(len(list_of_ids), len(successful_bids_df), datetime.now()))
