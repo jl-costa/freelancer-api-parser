@@ -87,7 +87,7 @@ while user_queue:
     else:
         pass
 
-    time.sleep(0.1)
+    time.sleep(3)
 
 # Select columns to keep in DF
 

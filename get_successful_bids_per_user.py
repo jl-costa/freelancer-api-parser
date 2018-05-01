@@ -58,10 +58,10 @@ def parse_all_successful_bids_per_user(userid, offset):
         all_bids = all_bids.append(bids_data)
         offset += 100
         bids_data = get_successful_bids_per_user(userid, offset)
-        print(userid)
-        print(all_bids.min()['time_submitted'])
-        print(offset)
-        print("len of all_bids is {}".format(len(all_bids)))
+        # print(userid)
+        # print(all_bids.min()['time_submitted'])
+        # print(offset)
+        # print("len of all_bids is {}".format(len(all_bids)))
 
     return all_bids
        
@@ -118,7 +118,7 @@ while user_id_queue:
     else:
         pass
 
-    time.sleep(1)
+    time.sleep(3)
 
 # Store user_ids that were processed in dedicated table
 
