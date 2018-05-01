@@ -87,7 +87,7 @@ cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_c
 
 # Import 100 user IDs whose bids still have to be parsed. Select only freelancer or hybrid profiles.
 # ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') AND userid NOT IN (SELECT userid FROM bids) LIMIT 100")
-ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') LIMIT 100")
+ids_result = cnx.execute("SELECT userid FROM users WHERE (chosen_role = 'freelancer' OR chosen_role = 'both') LIMIT 15")
 
 # Initialize empty list
 list_of_ids = []
@@ -112,11 +112,8 @@ while user_id_queue:
     
     # Process data returned by API, if bids were found
     if bids_df.empty != True:
-        tempdf = pd.io.json.json_normalize(bids_df)
-        tempdf.columns = tempdf.columns.map(lambda x: x.split(".")[-1])
-        tempdf.insert(0, 'userid', userid)
-        tempdf = tempdf.loc[:,~tempdf.columns.duplicated()]
-        successful_bids_df = successful_bids_df.append(tempdf)
+        bids_df = bids_df.loc[:,~bids_df.columns.duplicated()]
+        successful_bids_df = successful_bids_df.append(bids_df)
     
     # If bids weren't found, do nothing
     else:
