@@ -58,24 +58,8 @@ def parse_all_successful_bids_per_user(userid, offset):
         all_bids = all_bids.append(bids_data)
         offset += 100
         bids_data = get_successful_bids_per_user(userid, offset)
-        # print(userid)
-        # print(all_bids.min()['time_submitted'])
-        # print(offset)
-        # print("len of all_bids is {}".format(len(all_bids)))
 
     return all_bids
-       
-        
-    #     try:
-            
-    #         all_user_bids_df = parse_all_successful_bids_per_user(userid, offset, all_user_bids_df)
-    #         return all_user_bids_df
-    #     except IndexError:
-    #         return all_user_bids_df
-    # else:
-    #     return all_user_bids_df
-
-
 
 # Initialize local SQL connection
 cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], 
