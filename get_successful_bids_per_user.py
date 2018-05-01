@@ -43,7 +43,9 @@ def get_successful_bids_per_user(user_id, offset):
         if bids_response['bids']:
             bids_data = pd.io.json.json_normalize(bids_response['bids'])
             bids_data.columns = bids_data.columns.map(lambda x: x.split(".")[-1])
-        return bids_data
+            return bids_data
+        else:
+            return bids_data
     except BidsNotFoundException:
         return bids_data        
 
