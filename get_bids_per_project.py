@@ -55,10 +55,6 @@ def parse_all_bids_per_project(project_id, offset):
         all_bids = all_bids.append(bids_data)
         offset += 100
         bids_data = get_bids_per_project(project_id, offset)
-        # print(project_id)
-        # print(all_bids.min()['time_submitted'])
-        # print(offset)
-        # print("len of all_bids is {}".format(len(all_bids)))
 
     return all_bids
 
@@ -70,9 +66,8 @@ cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_c
                                                                             db_config['db']), 
                                                                             echo=False)
 
-# Import 100 project IDs whose bids still have to be parsed.
-# ids_result = cnx.execute("SELECT project_id FROM successful_bids WHERE project_id NOT IN (SELECT * FROM processed_projects_bids) LIMIT 50")
-ids_result = cnx.execute("SELECT project_id FROM successful_bids LIMIT 10")
+# Import 50 project IDs whose bids still have to be parsed.
+ids_result = cnx.execute("SELECT project_id FROM successful_bids WHERE project_id NOT IN (SELECT * FROM processed_projects_bids) LIMIT 50")
 
 # Initialize empty list
 list_of_project_ids = []

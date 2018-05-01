@@ -1,0 +1,1 @@
+for i in {1..200}; do python3.6 /opt/freelancer-api-parser/get_bids_per_project.py >> /opt/freelancer-api-parser/get_bids_per_project.log; done
