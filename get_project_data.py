@@ -20,6 +20,10 @@ from freelancersdk.resources.projects.helpers import (
 from freelancersdk.resources.projects.exceptions import \
     ProjectsNotFoundException
 
+# Create session
+token = '***REMOVED***'
+session = Session(oauth_token=token)
+
 # Get all data for a project
 def get_project_data(project_id):
     url = os.environ.get('FLN_URL')
