@@ -12,12 +12,12 @@ from collections import deque
 
 from freelancer_sdk_v2.session import Session
 
-from freelancersdk.resources.projects.projects import get_projects
-from freelancersdk.resources.projects.helpers import (
+from freelancer_sdk_v2.resources.projects.projects import get_projects
+from freelancer_sdk_v2.resources.projects.helpers import (
     create_get_projects_object, create_get_projects_project_details_object,
     create_get_projects_user_details_object
 )
-from freelancersdk.resources.projects.exceptions import \
+from freelancer_sdk_v2.resources.projects.exceptions import \
     ProjectsNotFoundException
 
 # Create session
