@@ -83,17 +83,17 @@ while project_queue:
 
         #If skills are listed, iterate and parse skill name and category name
         if len(project_data['projects'][0]['jobs']) > 0:
-	        # Initialize empty strings to parse skills and categories
-	        skills_field = ''
-			categories_field = ''
-			for skill in project_data['projects'][0]['jobs']:
-			    skills_field += skill['name'] + '; '
-			    categories_field += skill['category']['name'] + '; '
-	    	# Insert results into dedicated fields in DF
-	    	tempdf.insert(0, 'skills', skills_field)
-	    	tempdf.insert(0, 'skill_categories', categories_field)
+            # Initialize empty strings to parse skills and categories
+            skills_field = ''
+            categories_field = ''
+            for skill in project_data['projects'][0]['jobs']:
+                skills_field += skill['name'] + '; '
+                categories_field += skill['category']['name'] + '; '
+            # Insert results into dedicated fields in DF
+            tempdf.insert(0, 'skills', skills_field)
+            tempdf.insert(0, 'skill_categories', categories_field)
 
-    	# Append tempdf to main DF
+        # Append tempdf to main DF
         projectdf = projectdf.append(tempdf)
     
     # If project data wasn't found, do nothing
@@ -113,8 +113,8 @@ projectdf = projectdf.loc[: ,
 'minimum', 
 'name', 
 'project_type', 
-'can_post_review	code', 
-'country	exchange_rate', 
+'can_post_review    code', 
+'country    exchange_rate', 
 'id', 
 'is_external', 
 'name', 
@@ -138,7 +138,7 @@ projectdf = projectdf.loc[: ,
 'administrative_area', 
 'city', 
 'code', 
-'demonym	', 
+'demonym    ', 
 'flag_url', 
 'flag_url_cdn', 
 'highres_flag_url', 
