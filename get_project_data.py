@@ -97,8 +97,8 @@ while project_queue:
             tempdf.insert(0, 'skills', skills_field)
             tempdf.insert(0, 'skill_categories', categories_field)
 
-        # Convert the jobs dict to str for storage in DB
-        tempdf['jobs'] = tempdf['jobs'].to_string()
+        # Convert the DF to str for successful storage in DB
+        tempdf = tempdf.to_string()
         # Append tempdf to main DF
         projectdf = projectdf.append(tempdf)
     
