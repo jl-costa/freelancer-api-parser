@@ -1,1 +1,1 @@
-for i in {1..200}; do python3.6 /opt/freelancer-api-parser/get_projects_data.py >> /opt/freelancer-api-parser/get_projects_data.log; done
+for i in {1..200}; do python3.6 /opt/freelancer-api-parser/get_project_data.py.py >> /opt/freelancer-api-parser/get_project_data.py.log; done
