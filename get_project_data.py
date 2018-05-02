@@ -98,7 +98,7 @@ while project_queue:
             tempdf.insert(0, 'skill_categories', categories_field)
 
         # Convert the DF to str for successful storage in DB
-        tempdf = tempdf.to_string()
+        tempdf = tempdf.astype(str)
         # Append tempdf to main DF
         projectdf = projectdf.append(tempdf)
     
@@ -181,7 +181,6 @@ projectdf = projectdf.loc[:,
 'track_ids', 
 'true_location', 
 'type', 
-'NDA', 
 'active_prepaid_milestone', 
 'assisted', 
 'featured', 
