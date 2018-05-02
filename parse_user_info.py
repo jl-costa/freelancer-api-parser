@@ -68,8 +68,6 @@ user_queue = deque(list_of_ids)
 # Initialize empty dataframe
 userdf = pd.DataFrame()
 
-# Initialize local SQL connection to store data
-
 # Parse users until queue is empty
 while user_queue:
     userid = user_queue.pop()

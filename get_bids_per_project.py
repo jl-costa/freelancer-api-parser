@@ -105,7 +105,6 @@ while project_id_queue:
 pd.Series(list_of_project_ids).to_sql(name='processed_projects_bids', con=cnx, if_exists = 'append', index=False)
 
 # Store bids in DB if bids DF isn't empty
-
 if all_bids_df.empty != True:
     all_bids_df.to_sql(name='all_bids', con=cnx, if_exists = 'append', index=False)
 
