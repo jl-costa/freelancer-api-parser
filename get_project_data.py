@@ -58,7 +58,7 @@ cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_c
 
 # Import 100 project IDs that still have to be parsed
 # ids_result = cnx.execute("SELECT project_id FROM successful_bids WHERE project_id NOT IN (SELECT * FROM processed_projects) LIMIT 100")
-projects_result = cnx.execute("SELECT project_id FROM successful_bids LIMIT 10")
+projects_result = cnx.execute("SELECT project_id FROM successful_bids LIMIT 2")
 
 # Initialize empty list
 list_of_projects = []
@@ -97,6 +97,8 @@ while project_queue:
             tempdf.insert(0, 'skills', skills_field)
             tempdf.insert(0, 'skill_categories', categories_field)
 
+        # Convert the jobs dict to str for storage in DB
+        tempdf['jobs'] = tempdf['jobs'].to_string()
         # Append tempdf to main DF
         projectdf = projectdf.append(tempdf)
     
@@ -104,10 +106,10 @@ while project_queue:
     else:
         pass
 
-    time.sleep(3)
+    time.sleep(2)
 
 # Select columns to keep
-projectdf = projectdf.loc[: ,
+projectdf = projectdf.loc[:,
 ['project_id', 
 'bid_avg', 
 'bid_count', 
@@ -117,8 +119,10 @@ projectdf = projectdf.loc[: ,
 'minimum', 
 'name', 
 'project_type', 
-'can_post_review    code', 
-'country    exchange_rate', 
+'can_post_review',
+'code', 
+'country',
+'exchange_rate', 
 'id', 
 'is_external', 
 'name', 
