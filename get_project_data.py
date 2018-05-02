@@ -61,7 +61,7 @@ list_of_projects = []
 
 # Iterate through output of SQL query, and add IDs to list
 for row in projects_result:
-     list_of_projects.append(row['id'])
+     list_of_projects.append(row['project_id'])
 
 # Create queue of projects from list of IDs
 project_queue = deque(list_of_projects)
