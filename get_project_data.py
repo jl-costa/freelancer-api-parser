@@ -57,8 +57,7 @@ def get_project_data(project_id):
 cnx = create_engine('mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8mb4'.format(db_config['user'], db_config['pass'], db_config['host'], db_config['port'], db_config['db']), echo=False)
 
 # Import 100 project IDs that still have to be parsed
-# ids_result = cnx.execute("SELECT project_id FROM successful_bids WHERE project_id NOT IN (SELECT * FROM processed_projects) LIMIT 100")
-projects_result = cnx.execute("SELECT project_id FROM successful_bids LIMIT 2")
+projects_result = cnx.execute("SELECT project_id FROM successful_bids WHERE project_id NOT IN (SELECT * FROM processed_projects) LIMIT 100")
 
 # Initialize empty list
 list_of_projects = []
