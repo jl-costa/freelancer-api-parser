@@ -1,5 +1,4 @@
 # freelancer-api-parser
-Parse user details, bids, and project details from Freelancer.com using the API
 
 This is a series of Python script intended to parse a sample of freelancers from freelancer.com, get their profile details, get all of the projects that they've been awarded over their career in the platform, and then parse project details for those successful projects, as well as associated reviews.
 
@@ -35,6 +34,8 @@ This is the recommended order of execution:
 4) get_project_data.py - this will take project IDs from the successful bids found in the previous step, and parse additional project details into a separate table.
 
 5) get_reviews.py - this will also take project IDs from the list of successful bids, and store all reviews associated with each project into a separate table.
+
+(OPTIONAL) get_bids_per_project.py - this is useful in case you want to parse ALL bids associated with each project, not just the awarded bid.
 
 # Notes
 
