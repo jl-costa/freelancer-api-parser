@@ -17,7 +17,7 @@ from freelancer_sdk_v2.resources.projects.exceptions import \
     BidsNotFoundException
 
 # Create session
-token = '***REMOVED***'
+token = ''
 session = Session(oauth_token=token)
 
 # Function to get 100 successful (awarded) bids for a given user

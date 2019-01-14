@@ -22,7 +22,7 @@ from freelancer_sdk_v2.resources.users.exceptions import \
     UsersNotFoundException
 
 # Create session
-token = '***REMOVED***'
+token = 'Fne2Y3oFUZRHTYnHcrFTfGp9mJJH64'
 session = Session(oauth_token=token)
 
 # Function to get profile data for a user ID
