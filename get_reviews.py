@@ -15,7 +15,7 @@ from freelancer_sdk_v2.session import Session
 from freelancer_sdk_v2.resources.projects.projects import get_reviews
 
 # Create session
-token = '***REMOVED***'
+token = ''
 session = Session(oauth_token=token)
 
 # Get all reviews for a project
