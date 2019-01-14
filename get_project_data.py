@@ -21,7 +21,7 @@ from freelancer_sdk_v2.resources.projects.exceptions import \
     ProjectsNotFoundException
 
 # Create session
-token = '***REMOVED***'
+token = ''
 session = Session(oauth_token=token)
 
 # Get all data for a project
